@@ -49,20 +49,25 @@ function _beae_get_editor_assets() {
 		wp_enqueue_style( 'wp-block-library-theme' );
 	}
 
-	// We don't want to load EDITOR scripts in the iframe, only enqueue
-	// front-end assets for the content.
-	add_filter( 'should_load_block_editor_scripts_and_styles', '__return_false' );
+	// Enqueue both block and block editor assets.
+	add_filter( 'should_load_block_editor_scripts_and_styles', '__return_true' );
 	do_action( 'enqueue_block_assets' );
-	remove_filter( 'should_load_block_editor_scripts_and_styles', '__return_false' );
+	do_action( 'enqueue_block_editor_assets' );
+	remove_filter( 'should_load_block_editor_scripts_and_styles', '__return_true' );
 
 	$block_registry = WP_Block_Type_Registry::get_instance();
 
-	// Additionally, do enqueue `editorStyle` assets for all blocks, which
-	// contains editor-only styling for blocks (editor content).
+	// Additionally, do enqueue `editorStyle` and `editorScript` assets for all
+	// blocks, which contains editor-only styling for blocks (editor content).
 	foreach ( $block_registry->get_all_registered() as $block_type ) {
 		if ( isset( $block_type->editor_style_handles ) && is_array( $block_type->editor_style_handles ) ) {
 			foreach ( $block_type->editor_style_handles as $style_handle ) {
 				wp_enqueue_style( $style_handle );
+			}
+		}
+    if ( isset( $block_type->editor_script_handles ) && is_array( $block_type->editor_script_handles ) ) {
+			foreach ( $block_type->editor_script_handles as $script_handle ) {
+				wp_enqueue_script( $script_handle );
 			}
 		}
 	}
