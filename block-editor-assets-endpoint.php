@@ -118,3 +118,29 @@ add_action("rest_api_init", function () {
         "permission_callback" => "__return_true",
     ]);
 });
+
+function register_custom_block_type() {
+    $block_type = [
+        "name" => "custom",
+        "title" => "Custom Block",
+        "editor_script" => "custom-block-script",
+        "editor_style" => "custom-block-style",
+    ];
+
+    register_block_type("bar/foo", $block_type);
+}
+
+add_action("init", "register_custom_block_type");
+
+function enqueue_custom_block_assets() {
+    wp_enqueue_script(
+        "custom-block-script",
+        plugin_dir_url(__FILE__) . "custom-block.js",
+    );
+    wp_enqueue_style(
+        "custom-block-style",
+        plugin_dir_url(__FILE__) . "custom-block.css",
+    );
+}
+
+add_action("enqueue_block_assets", "enqueue_custom_block_assets");

@@ -1,0 +1,12 @@
+body::before {
+  background-color: red;
+  color: white;
+  content: "Custom block.css";
+  display: block;
+  padding: 1rem;
+}
+
+.custom-block {
+  border: 1px solid red;
+  padding: 1rem;
+}
