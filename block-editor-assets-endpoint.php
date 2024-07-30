@@ -119,28 +119,16 @@ add_action("rest_api_init", function () {
     ]);
 });
 
-function register_custom_block_type() {
-    $block_type = [
-        "name" => "custom",
-        "title" => "Custom Block",
-        "editor_script" => "custom-block-script",
-        "editor_style" => "custom-block-style",
-    ];
 
-    register_block_type("bar/foo", $block_type);
+/**
+ * Registers the block using the metadata loaded from the `block.json` file.
+ * Behind the scenes, it registers also all assets so they can be enqueued
+ * through the block editor in the corresponding context.
+ *
+ * @see https://developer.wordpress.org/reference/functions/register_block_type/
+ */
+function create_block_custom_block_block_init() {
+	register_block_type( __DIR__ . '/custom-block/build' );
 }
 
-add_action("init", "register_custom_block_type");
-
-function enqueue_custom_block_assets() {
-    wp_enqueue_script(
-        "custom-block-script",
-        plugin_dir_url(__FILE__) . "custom-block.js",
-    );
-    wp_enqueue_style(
-        "custom-block-style",
-        plugin_dir_url(__FILE__) . "custom-block.css",
-    );
-}
-
-add_action("enqueue_block_assets", "enqueue_custom_block_assets");
+add_action( 'init', 'create_block_custom_block_block_init' );
