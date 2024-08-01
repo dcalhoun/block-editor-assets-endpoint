@@ -15,8 +15,9 @@ rsync -av \
   --exclude='.gitignore' \
   --exclude='.git' \
   --exclude='bin' \
-  --exclude='**/.editorconfig' \
-  --exclude='**/package-lock.json' \
+  --exclude='.editorconfig' \
+  --exclude='package-lock.json' \
+	--exclude='scripts' \
   "$SOURCE_DIR/" "$TEMP_DIR/" \
   > /dev/null
 
