@@ -101,6 +101,9 @@ function _beae_get_editor_assets() {
 	wp_print_footer_scripts();
 	$scripts = ob_get_clean();
 
+	$styles = set_asset_protocol($styles);
+	$scripts = set_asset_protocol($scripts);
+
 	// Restore the original instances.
 	$wp_styles  = $current_wp_styles;
 	$wp_scripts = $current_wp_scripts;
@@ -110,7 +113,6 @@ function _beae_get_editor_assets() {
 		'scripts' => $scripts,
 	);
 }
-
 add_action("rest_api_init", function () {
     register_rest_route("beae/v1", "editor-assets", [
         "methods" => "GET",
@@ -119,6 +121,17 @@ add_action("rest_api_init", function () {
     ]);
 });
 
+/**
+ * Ensure all asset URLs include correct protocol.
+ *
+ * @param string $assets The HTML assets.
+ *
+ * @return string The modified HTML assets.
+ */
+function set_asset_protocol($assets) {
+	$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+	return preg_replace('/(src|href=["\'])(\/\/)/', '$1' . $protocol, $assets);
+}
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
