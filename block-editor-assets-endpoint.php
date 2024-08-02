@@ -49,6 +49,9 @@ function _beae_get_editor_assets() {
 		wp_enqueue_style( 'wp-block-library-theme' );
 	}
 
+	// Enqueue frequent dependent, admin-only `dashicon` asset
+	wp_enqueue_style( 'dashicons' );
+
 	// Manually enqueue an admin-only script upon which Jetpack block's depend.
 	// TODO: This brittle approach could break if Jetpack depdencies change
 	// or a different third-party block requires different dependencies.
