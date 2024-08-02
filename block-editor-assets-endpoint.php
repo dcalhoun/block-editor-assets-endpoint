@@ -52,10 +52,7 @@ function _beae_get_editor_assets() {
 	// Enqueue frequent dependent, admin-only `dashicon` asset
 	wp_enqueue_style( 'dashicons' );
 
-	// Manually enqueue an admin-only script upon which Jetpack block's depend.
-	// TODO: This brittle approach could break if Jetpack depdencies change
-	// or a different third-party block requires different dependencies.
-	// https://github.com/WordPress/wordpress-develop/blob/4115c99a784db8a787e2245300c83c9c8d336503/src/wp-includes/script-loader.php#L1408
+	// Enqueue frequent dependent, admin-only `postbox` asset
 	$suffix = wp_scripts_get_suffix();
 	wp_enqueue_script( 'postbox', "/wp-admin/js/postbox$suffix.js", array( 'jquery-ui-sortable', 'wp-a11y' ), false, 1 );
 
