@@ -113,11 +113,16 @@ function _beae_get_editor_assets() {
 		'scripts' => $scripts,
 	);
 }
+
+function _beae_get_editor_assets_permissions_check() {
+	return current_user_can( 'edit_posts' );
+}
+
 add_action("rest_api_init", function () {
     register_rest_route("beae/v1", "editor-assets", [
         "methods" => "GET",
         "callback" => "_beae_get_editor_assets",
-        "permission_callback" => "__return_true",
+        "permission_callback" => "_beae_get_editor_assets_permissions_check",
     ]);
 });
 
