@@ -4,6 +4,15 @@
  */
 
 /**
+ * Current screen retrieval may occur within third-party code, which may presume
+ * it is running within the context of the admin. This endpoint is not run
+ * within the admin context, so we need to ensure the function is available.
+ */
+if ( !function_exists( 'get_current_screen' ) ) {
+	require_once ABSPATH . '/wp-admin/includes/screen.php';
+}
+
+/**
  * Collect the block editor assets that need to be loaded into the mobile app's embedded editor.
  *
  * @access private
