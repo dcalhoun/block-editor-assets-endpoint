@@ -158,10 +158,3 @@ function create_block_custom_block_block_init() {
 	register_block_type( __DIR__ . '/custom-block/build' );
 }
 add_action( 'init', 'create_block_custom_block_block_init' );
-
-/**
- * Allow the REST API to accept requests from the editor.
- */
-add_action( 'rest_pre_serve_request', function () {
-		header('Access-Control-Allow-Headers: Authorization');
-} );
