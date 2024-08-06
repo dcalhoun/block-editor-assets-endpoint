@@ -58,6 +58,9 @@ function _beae_get_editor_assets() {
 		wp_enqueue_style( 'wp-block-library-theme' );
 	}
 
+	// Enqueue frequent dependent, admin-only `dashicon` asset
+	wp_enqueue_style( 'dashicons' );
+
 	// Enqueue frequent dependent, admin-only `postbox` asset
 	$suffix = wp_scripts_get_suffix();
 	wp_enqueue_script( 'postbox', "/wp-admin/js/postbox$suffix.js", array( 'jquery-ui-sortable', 'wp-a11y' ), false, 1 );
