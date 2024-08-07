@@ -4,17 +4,12 @@
  */
 
 /**
- * Current screen retrieval often occur within third-party code, with the
- * presumption code execution occurs within the context of the admin. This
- * endpoint is not run within the admin context, so we manually set the current
- * screen to 'edit-post' to avoid fatal errors.
+ * Current screen retrieval may occur within third-party code, which may presume
+ * it is running within the context of the admin. This endpoint is not run
+ * within the admin context, so we need to ensure the function is available.
  */
-if ( !class_exists( 'WP_Screen' ) ) {
-	require_once ABSPATH . '/wp-admin/includes/class-wp-screen.php';
-}
 if ( !function_exists( 'get_current_screen' ) ) {
 	require_once ABSPATH . '/wp-admin/includes/screen.php';
-	set_current_screen( 'edit-post' );
 }
 
 /**
