@@ -31,7 +31,7 @@ zip -r "$TEMP_DIR/$ZIP_FILE" ./* > /dev/null
 popd > /dev/null
 
 # Move the ZIP file to the desired location
-mv "$TEMP_DIR/$ZIP_FILE" "$SOURCE_DIR"
+mv -f "$TEMP_DIR/$ZIP_FILE" "$SOURCE_DIR"
 
 # Clean up the temporary directory
 rm -rf "$TEMP_DIR"
