@@ -92,6 +92,7 @@ if ( ! class_exists( 'WP_REST_Block_Editor_Assets_Controller' ) ) {
 
 			// Enqueue foundational post editor assets.
 			wp_enqueue_script( 'wp-edit-post' );
+			wp_enqueue_style( 'wp-edit-post' );
 
 			// Ensure the block editor scripts and styles are enqueued.
 			add_filter( 'should_load_block_editor_scripts_and_styles', '__return_true' );
