@@ -60,6 +60,9 @@ if ( ! class_exists( 'WP_REST_Block_Editor_Assets_Controller' ) ) {
 			$wp_styles  = new WP_Styles();
 			$wp_scripts = new WP_Scripts();
 
+			// Trigger an action frequently used by plugins to enqueue assets.
+			do_action( 'wp_loaded' );
+
 			// Register all currently registered styles and scripts. The actions that
 			// follow enqueue assets, but don't necessarily register them.
 			$wp_styles->registered  = isset( $current_wp_styles->registered ) ? $current_wp_styles->registered : array();
