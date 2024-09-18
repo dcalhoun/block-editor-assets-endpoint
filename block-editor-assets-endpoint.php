@@ -1,6 +1,13 @@
 <?php
 /*
  * Plugin Name: Block Editor Assets Endpoint
+ * Description: Adds a REST API endpoint for retrieving block editor assets.
+ * Version: 0.0.1-alpha.3
+ * Author: WordPress Contributors
+ * Author URI: https://github.com/WordPress/gutenberg
+ * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires Plugins: gutenberg
  */
 
 /**
