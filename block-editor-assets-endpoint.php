@@ -44,7 +44,7 @@ if ( ! class_exists( 'WP_REST_Block_Editor_Assets_Controller' ) ) {
 					array(
 						'methods'             => WP_REST_Server::READABLE,
 						'callback'            => array( $this, 'get_items' ),
-						'permission_callback' => array( $this, 'get_items_permissions_check' ),
+						'permission_callback' => '__return_true',
 					),
 					'schema' => array( $this, 'get_public_item_schema' ),
 				)
@@ -141,10 +141,49 @@ if ( ! class_exists( 'WP_REST_Block_Editor_Assets_Controller' ) ) {
 			$wp_styles  = $current_wp_styles;
 			$wp_scripts = $current_wp_scripts;
 
+			$script_urls = $this->parse_scripts( $scripts );
+			$style_urls = $this->parse_styles( $styles );
+
+			sort($script_urls);
+			sort($style_urls);
+
 			return array(
-				'styles'  => $styles,
-				'scripts' => $scripts,
+				'styles_html'  => $styles,
+				'scripts_html' => $scripts,
+				'scripts'	=> $script_urls,
+				'styles'  	=> $style_urls,
+				'hash'		=> hash( 'sha256', join($script_urls) . join($style_urls) ),
 			);
+		}
+
+		private function parse_scripts( $scripts ) {
+			$dom = new DOMDocument();
+			$dom->loadHTML($scripts);
+	
+			$scripts = $dom->getElementsByTagName('script');
+	
+			$urls = [];
+	
+			foreach ( $scripts as $script ) {
+				$urls[] = $script->getAttribute('src');
+			}
+	
+			return array_values(array_filter($urls));
+		}
+
+		private function parse_styles( $styles ) {
+			$dom = new DOMDocument();
+			$dom->loadHTML($styles);
+
+			$styles = $dom->getElementsByTagName('link');
+
+			$urls = [];
+
+			foreach ( $styles as $style ) {
+				$urls[] = $style->getAttribute('href');
+			}
+
+			return array_values(array_filter($urls));
 		}
 
 		/**
